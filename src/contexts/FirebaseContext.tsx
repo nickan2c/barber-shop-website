@@ -8,7 +8,7 @@ import {
   signOut,
   onAuthStateChanged
 } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import { clientAuth } from '../lib/firebase';
 
 interface FirebaseContextType {
   user: User | null;
@@ -25,7 +25,7 @@ export function FirebaseProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(clientAuth, (user) => {
       setUser(user);
       setLoading(false);
     });
@@ -34,15 +34,15 @@ export function FirebaseProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    await signInWithEmailAndPassword(auth, email, password);
+    await signInWithEmailAndPassword(clientAuth, email, password);
   };
 
   const signUp = async (email: string, password: string) => {
-    await createUserWithEmailAndPassword(auth, email, password);
+    await createUserWithEmailAndPassword(clientAuth, email, password);
   };
 
   const logout = async () => {
-    await signOut(auth);
+    await signOut(clientAuth);
   };
 
   const value = {

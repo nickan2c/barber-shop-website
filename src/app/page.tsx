@@ -1,67 +1,87 @@
-import Navigation from '@/components/Navigation';
+'use client';
+
 import Link from 'next/link';
-import Image from 'next/image';
+import { useFirebase } from '../contexts/FirebaseContext';
 
 export default function Home() {
+  const { user } = useFirebase();
+
   return (
-    <>
-      <Navigation />
-      <div className="relative h-[60vh] bg-gray-900">
-        <div className="absolute inset-0 bg-black/50 z-10" />
-        <div className="relative z-20 flex flex-col items-center justify-center h-full text-white text-center px-4">
-          <h1 className="text-5xl font-bold mb-4">Classic Cuts Barber Shop</h1>
-          <p className="text-xl mb-8">Where Style Meets Tradition</p>
-          <Link
-            href="/booking"
-            className="bg-white text-gray-900 px-8 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors"
-          >
-            Book Now
+    <div className="main-layout">
+      <nav className="nav">
+        <div className="nav-container">
+          <Link href="/" className="nav-logo">
+            Classic Cuts
           </Link>
+          <div className="nav-links">
+            <Link href="/services" className="nav-link">Services</Link>
+            <Link href="/book" className="nav-link">Book Now</Link>
+            {user ? (
+              <Link href="/account" className="nav-link">My Account</Link>
+            ) : (
+              <Link href="/login" className="nav-link">Login</Link>
+            )}
+          </div>
         </div>
-      </div>
+      </nav>
 
-      <section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Welcome to Classic Cuts</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="bg-gray-100 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold mb-4">Expert Barbers</h3>
-                <p>Our skilled team brings years of experience to every cut</p>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="bg-gray-100 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold mb-4">Premium Service</h3>
-                <p>Enjoy a luxurious grooming experience in our modern facility</p>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="bg-gray-100 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold mb-4">Easy Booking</h3>
-                <p>Book your appointment online with our convenient scheduling system</p>
-              </div>
-            </div>
+      <section className="hero">
+        <div className="hero-content">
+          <h1 className="hero-title">Classic Cuts Barbershop</h1>
+          <p className="hero-subtitle">Experience the finest in traditional grooming</p>
+          <div className="hero-buttons">
+            <Link href="/book" className="btn btn-primary">
+              Book Now
+            </Link>
+            {user && (
+              <Link href="/account" className="btn btn-secondary hero-secondary-btn">
+                View My Bookings
+              </Link>
+            )}
           </div>
         </div>
       </section>
 
-      <section className="bg-gray-100 py-16 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-8">Visit Us</h2>
-          <div className="space-y-4">
-            <p className="text-lg">123 Barber Street</p>
-            <p className="text-lg">City, State 12345</p>
-            <p className="text-lg">Phone: (555) 123-4567</p>
-            <div className="mt-8">
-              <h3 className="text-xl font-semibold mb-4">Hours of Operation</h3>
+      <main>
+        <section className="container section">
+          <h2 className="section-title">Why Choose Us?</h2>
+          <div className="features">
+            <div className="feature">
+              <h3>Expert Barbers</h3>
+              <p>Our skilled team brings years of experience and expertise to every cut.</p>
+            </div>
+            <div className="feature">
+              <h3>Classic & Modern Styles</h3>
+              <p>From traditional cuts to contemporary trends, we do it all.</p>
+            </div>
+            <div className="feature">
+              <h3>Premium Experience</h3>
+              <p>Enjoy complimentary beverages and a relaxing atmosphere.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="visit-us">
+          <div className="container">
+            <h2 className="section-title">Visit Us</h2>
+            <div className="contact-info">
+              <p>123 Barber Street, London, UK</p>
+              <p>Phone: +44 20 1234 5678</p>
+              <p>Email: info@classiccuts.uk</p>
+            </div>
+            <div className="hours">
+              <h3>Opening Hours</h3>
               <p>Monday - Friday: 9:00 AM - 7:00 PM</p>
-              <p>Saturday: 9:00 AM - 5:00 PM</p>
-              <p>Sunday: Closed</p>
+              <p>Saturday: 9:00 AM - 6:00 PM</p>
+              <p>Sunday: 10:00 AM - 4:00 PM</p>
             </div>
           </div>
-        </div>
-      </section>
-    </>
+        </section>
+      </main>
+
+      <footer className="footer">
+        <p>&copy; 2024 Classic Cuts Barbershop. All rights reserved.</p>
+      </footer>
+    </div>
   );
 }
